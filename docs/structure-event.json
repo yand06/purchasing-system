@@ -1,0 +1,35 @@
+{
+    "event_id": "uuid",
+    "event_type": "purchasing.pr.created",
+    "event_version": "1.0",
+    "source_service": "purchasing-service",
+    "timestamp": "2026-03-15T12:00:00Z",
+
+    "actor": 
+        {
+        "user_id": "uuid",
+        "username": "johndoe",
+        "role": "manager"
+        },
+
+    "entity": 
+        {
+        "entity_name": "purchase_request",
+        "entity_id": "uuid"
+        },
+
+    "data": 
+        {
+        "request_number": "PR-2026-0001",
+        "department": "Finance",
+        "total_items": 3,
+        "estimated_total_price": 15000000
+        },
+
+    "metadata": 
+        {
+        "ip_address": "192.168.1.10",
+        "user_agent": "Mozilla/5.0",
+        "correlation_id": "uuid"
+        }
+}
