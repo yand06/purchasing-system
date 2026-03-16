@@ -205,3 +205,66 @@ ON t_purchase_order(vendor_id);
 
 CREATE INDEX idx_pr_user
 ON t_purchase_request(requested_by);
+
+CREATE TABLE t_audit_log (
+    id BIGSERIAL PRIMARY KEY,
+    idf UUID NOT NULL UNIQUE,
+
+    user_id BIGINT,
+    username VARCHAR(100),
+
+    service_name VARCHAR(100),
+    action VARCHAR(150),
+
+    entity_name VARCHAR(150),
+    entity_id VARCHAR(100),
+
+    description TEXT,
+
+    ip_address VARCHAR(100),
+    user_agent TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE t_audit_log_detail (
+    id BIGSERIAL PRIMARY KEY,
+    idf UUID NOT NULL UNIQUE,
+
+    audit_log_id BIGINT,
+
+    field_name VARCHAR(150),
+
+    old_value TEXT,
+    new_value TEXT,
+
+    CONSTRAINT fk_audit_detail_log
+        FOREIGN KEY (audit_log_id)
+        REFERENCES t_audit_log(id)
+);
+
+CREATE TABLE t_system_log (
+    id BIGSERIAL PRIMARY KEY,
+    idf UUID NOT NULL UNIQUE,
+
+    service_name VARCHAR(150),
+
+    log_level VARCHAR(20),
+    message TEXT,
+
+    stack_trace TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_audit_user
+ON t_audit_log(user_id);
+
+CREATE INDEX idx_audit_service
+ON t_audit_log(service_name);
+
+CREATE INDEX idx_audit_entity
+ON t_audit_log(entity_name);
+
+CREATE INDEX idx_system_log_level
+ON t_system_log(log_level);
